@@ -10,14 +10,14 @@ import camera_intrinsic_parameters as params
 from helper_functions import find_perpendicular_plane_ransac, convert_2d_to_3d, distance_3d, draw_points_and_lines, view_2D_image
 
 # Load RGB image
-image_path = "data/images/mnm_boxes_rgb.jpg"
-original_rgb_image = o3d.io.read_image("data/images/mnm_boxes_rgb.jpg")
+image_path = "mnm_boxes_rgb.jpg"
+original_rgb_image = o3d.io.read_image("mnm_boxes_rgb.jpg")
 cv_image  = cv2.cvtColor(np.array(original_rgb_image), cv2.COLOR_RGBA2RGB)
 o3d_image = o3d.geometry.Image(cv_image)
 
 # Load depth image
-depth_image = o3d.io.read_image("data/images/mnm_boxes_depth.png")
-depth_image_cv2 = cv2.imread("data/images/mnm_boxes_depth.png", cv2.IMREAD_UNCHANGED)  # Preserves original bit-depth
+depth_image = o3d.io.read_image("mnm_boxes_depth.png")
+depth_image_cv2 = cv2.imread("mnm_boxes_depth.png", cv2.IMREAD_UNCHANGED)  # Preserves original bit-depth
 
 # Convert to numpy array
 depth_array = np.array(depth_image_cv2)
@@ -31,7 +31,7 @@ rgbd_image = o3d.geometry.RGBDImage.create_from_color_and_depth(o3d_image, depth
 #####################################################
 # Predict segmentation mask for boxes
 #####################################################
-model = YOLO('data/all_erlensee_normalcolor_pretrained_mosaic_0_7.pt')  # custom trained YOLOv8n model
+model = YOLO('all_erlensee_normalcolor_pretrained_mosaic_0_7.pt')  # custom trained YOLOv8n model
 
 prediction_results = model.predict(cv2.cvtColor(cv_image, cv2.COLOR_BGR2RGB))
 yolo_result = prediction_results[0].plot()
@@ -153,7 +153,7 @@ if bottom_edge is not None:
 #####################################################
 # Create point cloud
 #####################################################
-depth_image = cv2.imread('data/images/mnm_boxes_depth.png', cv2.IMREAD_UNCHANGED)  # Depth image
+depth_image = cv2.imread('mnm_boxes_depth.png', cv2.IMREAD_UNCHANGED)  # Depth image
 
 # Camera intrinsic parameters (you need to replace these with your actual values)
 fx = params.camera_params.fx  # Focal length in pixels along x-axis
