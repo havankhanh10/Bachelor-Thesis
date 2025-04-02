@@ -1,0 +1,6 @@
+pandas
+matplotlib
+numpy
+open3d
+opencv-python
+ultralytics
